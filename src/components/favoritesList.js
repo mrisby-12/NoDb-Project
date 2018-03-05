@@ -1,47 +1,48 @@
 import React, { Component } from 'react';
-import QuoteGenerator from './quoteGenerator'
 import axios from 'axios';
-
-
 
 export default class FavoritesList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      favoritesList: []
-    };
-    this.deleteFromFavorites = this.deleteFromFavorites.bind(this);
+      this.state = {
+        favoritesList: [],
+        title: 'My Saved Quotes'    
+      };
+    
+  this.updateFavListTitle = this.updateFavListTitle.bind(this);
   }
  
   componentDidMount() {
     axios
       .get('/api/favorites')
       .then(response => this.setState( { favoritesList: response.data } ))
-      .catch( () => console.log('error'));
-
+      .catch(error => console.log(error));
   }
 
-  deleteFromFavorites(quote) {
-    axios
-      .delete(`/api/delete/${quote.quoteText}`)
-      .then(response => this.setState( { favoritesList: response.data } ))
-      .catch( () => console.log( 'deletion error'));
+  updateFavListTitle() {
+    let update = prompt('Please update your favorite list name');
+      axios
+      .put(`/api/edit/${update}`)
+      .then(response => { this.setState( { title: response.data } ); })
+      .catch(error => console.log(error));  
   }
 
   render() {
-    let favorites = this.props.favoriteQuotes.map((element) =>(  
+    let favorites = this.props.favoriteQuotes.map((element, index) => (  
       <div>
-          <p>{element.quoteText}</p>
+          <p onClick={() => this.props.delete(index)} >{element.quoteText}</p>
           <p>--{element.quoteAuthor}</p>
       </div>
- ));
-    console.log('favorites', favorites);
+    ));
+
     return (
-     <div>
-       <h2>My Saved Quotes</h2>
-       <div className='favorites'>{favorites}</div>
+     <div className='favorites'>
+       <h2 onClick={ () => this.updateFavListTitle()}> <span>{this.state.title}</span>
+       <br /> <p>(Click on title to change list name)  (Click on a saved quote to delete from list)</p>
+       </h2>
+       
+       <div className='fav-list'>{favorites}</div>
      </div>   
-  
     );
   }
 }

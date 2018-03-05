@@ -10,62 +10,61 @@ export default class QuoteGenerator extends Component {
         this.state = {
             randomQuote: {},
             favoriteQuotes: []
-          }
+        }
 
-          this.addToFavs = this.addToFavs.bind(this);
+        this.addToFavs = this.addToFavs.bind(this);
+        this.deleteFromFavorites = this.deleteFromFavorites.bind(this);
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3001/api/test').then(response => {
-         this.setState( {randomQuote: response.data} );
-        })
-        .catch(err => console.log(err));
+        axios
+        .get('/api/test').then(response => {this.setState( {randomQuote: response.data});})
+        .catch(error => console.log(error));
     }
 
     addToFavs() {
-        let addTo = this.state.favoriteQuotes;
+        let {randomQuote} = this.state;
         if (JSON.stringify(this.state.favoriteQuotes).includes(JSON.stringify(this.state.randomQuote))) {
             alert('This quote is already in your favorites')
-        } else {
-       
-            addTo.push( this.state.randomQuote)
-         this.setState( { favoriteQuotes: addTo } )
-           
+            } else {
+            axios
+            .post('/api/favorites', {randomQuote})
+            .then(response => this.setState({ favoriteQuotes: response.data }) )
         }
     } 
 
     changeQuote() {
-        axios.get('http://localhost:3001/api/getNewQuote').then(response => {
-         this.setState( {randomQuote: response.data} );
-        })
-        .catch(err => console.log(err));
-      }
+        axios
+        .get('/api/test').then(response => {this.setState({ randomQuote: response.data });})
+        .catch(error => console.log(error));
+    }
     
+    deleteFromFavorites(quote) {
+        axios
+        .delete(`/api/delete/${quote}`)
+        .then(response => { this.setState( { favoriteQuotes: response.data })})
+        .catch( () => console.log( 'deletion error'));
+    }
 
     render() {
-        const {randomQuote, favoriteQuotes} = this.state
-        console.log(favoriteQuotes);
-    //     let favorites = favoriteQuotes.map((element) =>(  
-    //         <div>
-    //             <p>{element.quoteText}</p>
-    //             <p>--{element.quoteAuthor}</p>
-    //         </div>
-    //    ));
+        const {randomQuote} = this.state
+  
         return (
-        <div> 
-            <div className="blockquote"> <p>{randomQuote.quoteText} </p> 
-                    <br />  <br />          <p> --{randomQuote.quoteAuthor} </p>
+        <div className="middle-div"> 
+            <div className="blockquote">
+                <p>{randomQuote.quoteText} </p> 
+                <br />
+                <br />
+                <p> --{randomQuote.quoteAuthor} </p>
             </div>
-            <div>  </div>
             <br/>
             <button className={'button'} onClick={ () => this.changeQuote()}>Get A New Quote</button>
             <br/>
             <FavoriteButton add={this.addToFavs}/>
-            {/* <div className='favorites'>{favorites}</div> */}
-            <FavoritesList favoriteQuotes={this.state.favoriteQuotes}/>
-          </div>
+            <FavoritesList favoriteQuotes={this.state.favoriteQuotes} delete={this.deleteFromFavorites}/>
+        </div>
         );
-      }
+    }
 }
 
 

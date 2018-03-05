@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './../styling/App.css';
 
-
-
 export default class FavoriteButton extends Component {
   
   render() {
