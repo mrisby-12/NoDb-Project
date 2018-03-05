@@ -1,0 +1,89 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Courgette', cursive;
+  background: url('./Nodb Images/sunset-3156440_1280.jpg') no-repeat;
+  background-size: auto; 
+  color: bisque;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.parent-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center space-evenly;
+  align-items: center;
+  align-content: center;
+}  
+
+.header {
+  font-size: 1.5rem;
+}
+
+.button {
+	border : solid 2px #735b3d;
+	border-radius : 15px;
+  font-size : 30px;
+  font-family: 'Cookie', cursive;
+	color : bisque;
+  padding : 10px 40px;
+  width: 350px;
+	background : #331e03;
+	background : -webkit-gradient(linear, left top, left bottom, color-stop(0%,#331e03), color-stop(100%,#ff8c00));
+	background : -moz-linear-gradient(top, #331e03 0%, #ff8c00 100%);
+	background : -webkit-linear-gradient(top, #331e03 0%, #ff8c00 100%);
+	background : -o-linear-gradient(top, #331e03 0%, #ff8c00 100%);
+	background : -ms-linear-gradient(top, #331e03 0%, #ff8c00 100%);
+	background : linear-gradient(top, #331e03 0%, #ff8c00 100%);
+  filter : progid:DXImageTransform.Microsoft.gradient( startColorstr='#331e03', endColorstr='#ff8c00',GradientType=0 );
+  background-size: auto 200%;
+  background-position: 0 100%;
+  transition: background-position 0.5s;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-position: 0 0;
+}
+
+.blockquote {
+  background:#331E03;
+  border-left:10px solid #B04607;
+  margin:1.5em 10px;
+  padding: 1em 20px;
+  quotes: "\201C""\201D""\2018""\2019";
+  border-radius: 15px;
+  width: 500px;
+}
+
+  .blockquote:before {
+  color:#B04607;
+  content:open-quote;
+  font-size:4em;
+  line-height:.1em;
+  margin-right:.25em;
+  vertical-align:-.4em;
+}
+
+  .blockquote:after {
+    color:#B04607;
+    content:close-quote;
+    font-size:4em;
+    line-height:.1em;
+    margin-right:.25em;
+    vertical-align:-.4em;
+}
+
+  .blockquote p {
+  display:inline;
+  font-size: 30px;
+  font-family: 'Cookie', cursive;
+}
+
+h2 {
+  color: #331E03;
+}
